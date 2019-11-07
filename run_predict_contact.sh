@@ -24,7 +24,7 @@ fi
 
 # generate feature
 echo "Predicting feature ..."
-#$HOMEDIR/Generate_Feature/Generate_Feature.sh $tarname $seqfile $outdir
+$HOMEDIR/Generate_Feature/Generate_Feature.sh $tarname $seqfile $outdir
 
 # read in feature to pkl
 echo "Converting feature to pkl file ..."
