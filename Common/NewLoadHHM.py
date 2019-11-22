@@ -323,10 +323,10 @@ if __name__ == "__main__":
         sys.exit('Usage: %s <hhmfile(.hhm)>' % sys.argv[0])
     hhmfile = sys.argv[1]
 
-    if hhmfile.endswith('.hhm'):
-        protein = LoadHHM(hhmfile)
-    else:
+    if not hhmfile.endswith('.hhm'):
         sys.exit('ERROR: the input file shall have suffix .hmm')
+
+    protein = LoadHHM(hhmfile)
 
     savefile = os.path.basename(hhmfile) + '.pkl'
     with open(savefile, 'wb') as fh:
