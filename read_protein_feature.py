@@ -10,7 +10,7 @@ except:
     import pickle
 
 
-##in the future we may add some code to check correctness
+# in the future we may add some code to check correctness
 def Load1DFeatureFromFile(file, seqName=None, seq=None):
     # check input feature file
     if not os.path.isfile(file):
@@ -163,7 +163,8 @@ def ReadFeatures(p=None, DataSourceDir=None):
     OneProtein['DISO'] = Load1DFeatureFromFile(file=DataSourceDir+p+".diso",
                                                seqName=p,
                                                seq=OneProtein['sequence'])
-
+    
+    """
     # read in PSFM and PSSM from .tgt file
     import subprocess
     import tempfile
@@ -187,6 +188,12 @@ def ReadFeatures(p=None, DataSourceDir=None):
             file=tmp.name,
             seqName=p,
             seq=OneProtein['sequence'])
+    """
+
+    # read in PSFM and PSSM from .hhm file
+    hhm = LoadHHM(DataSourceDir+p+'.hhm')
+    OneProtein['PSFM'] = hhm['PSFM']
+    OneProtein['PSSM'] = hhm['PSSM']
     
     # read in evolutionary couplings from .ccmZ file
     OneProtein['ccmpredZ'] = LoadECMatrix(file=DataSourceDir+p+'.ccmZ',
@@ -248,5 +255,5 @@ if __name__ == "__main__":
         sys.argv[0]) )
     listFile, featureMetaDir, outPickle = sys.argv[1:4]
     
-    ## read a list of protein features into a single PKL file
+    # read a list of protein features into a single PKL file
     main(listFile, featureMetaDir, outPickle)
