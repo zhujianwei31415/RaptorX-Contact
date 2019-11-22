@@ -28,7 +28,7 @@ $HOMEDIR/Generate_Feature/Generate_Feature.sh $tarname $seqfile $outdir
 
 # read in feature to pkl
 echo "Converting feature to pkl file ..."
-pkl_file="$outdir/$tarname.contactFeatures.pkl"
+pkl_file="$outdir/$tarname.distanceFeatures.pkl"
 tmpfile=$(mktemp)
 echo $tarname > $tmpfile
 $PYTHON $HOMEDIR/read_protein_feature.py $tmpfile $outdir $pkl_file
