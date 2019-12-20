@@ -24,7 +24,14 @@ fi
 
 # generate feature
 echo "Predicting feature ..."
-$HOMEDIR/Generate_Feature/Generate_Feature.sh $tarname $seqfile $outdir
+flag_file="$outdir/$tarname.ccmZ"
+if [ ! -f $flag_file ]; then
+    $HOMEDIR/Generate_Feature/Generate_Feature.sh $tarname $seqfile $outdir
+fi
+if [ ! -f $flag_file ]; then
+    echo "ERROR: feature generation erro $tarname"
+    exit 1
+fi
 
 # read in feature to pkl
 echo "Converting feature to pkl file ..."
@@ -33,6 +40,10 @@ tmpfile=$(mktemp)
 echo $tarname > $tmpfile
 $PYTHON $HOMEDIR/read_protein_feature.py $tmpfile $outdir $pkl_file
 rm $tmpfile
+if [ ! -f $pkl_file ]; then
+    echo "ERROR: feature reading erro $tarname"
+    exit 1
+fi
 
 # predict contact matrix
 echo "Predicting contact ..."
@@ -49,5 +60,9 @@ fi
 echo "Convert pickle file to epad and matrix ..."
 epad_file="$outdir/$tarname.epad_prob"
 epad_25_file="$outdir/$tarname.epad_prob_25"
-mat_file="$outdir/$tarname.contactMatrix.txt"
-$PYTHON $HOMEDIR/read_output_distance.py $distance_file $epad_file $epad_25_file $mat_file
+contact_file="$outdir/$tarname.contactMatrix.txt"
+$PYTHON $HOMEDIR/read_output_distance.py $distance_file $epad_file $epad_25_file $contact_file
+if [ ! -f $contact_file ]; then
+    echo "ERROR: contact prediction erro $contact_file"
+    exit 1
+fi
