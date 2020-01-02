@@ -6,6 +6,7 @@ if [ $# != 3 ]; then
 fi
 
 # get python
+HOME=/casp/jianwzhu
 PYTHON="$HOME/anaconda3/envs/raptorx/bin/python"
 
 # get parameters from command line
